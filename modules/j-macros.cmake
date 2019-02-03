@@ -1,13 +1,44 @@
 
 # precompiled header macro
 macro(precompiled_header HEADER)
-	add_compiler_flags(/Yu${HEADER}.h)
-	set_source_files_properties(${HEADER}.cpp PROPERTIES COMPILE_FLAGS "/Yc${HEADER}.h")
+	if(MSVC)
+		add_compiler_flags(/Yu${HEADER}.h)
+		set_source_files_properties(${HEADER}.cpp PROPERTIES COMPILE_FLAGS "/Yc${HEADER}.h")
+	endif()
 endmacro()
 
 macro(set_target_precompiled_header NAME HEADER)
-	set_target_properties("${NAME}" PROPERTIES COMPILE_FLAGS "/Yu${HEADER}.h.h")
-	set_source_files_properties(${HEADER}.cpp PROPERTIES COMPILE_FLAGS "/Yc${HEADER}.h")
+	if(MSVC)
+		set_target_properties("${NAME}" PROPERTIES COMPILE_FLAGS "/Yu${HEADER}.h")
+		set_source_files_properties(${HEADER}.cpp PROPERTIES COMPILE_FLAGS "/Yc${HEADER}.h")
+	endif()
+endmacro()
+
+function(set_target_module_definition_file NAME ENGINE_DEF)
+	if(MSVC)
+		set(LINK_CMD "/DEF:\"${CMAKE_SOURCE_DIR}/${ENGINE_DEF}\"")
+
+		# apply link_cmd to all release configurations
+		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_RELEASE ${LINK_CMD})
+		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_MINSIZEREL ${LINK_CMD})
+		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_RELWITHDEBINFO ${LINK_CMD})
+	endif()
+endfunction()
+
+macro(hide_target_symbols NAME)
+	if(MSVC)
+		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+			set(ENGINE_DEF "${NAME}_d_x64.def")
+		else()
+			set(ENGINE_DEF "${NAME}_d.def")
+		endif()
+
+		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}")
+
+		file(WRITE ${CMAKE_BINARY_DIR}/UpdateDEF.bat "@echo off\nif \"%2\" == \"Debug\" call \"Tools\\Lucas Easy Export Definition File Updater.exe\" \"%~1\" -update \"%~n1.def\" -silent")
+
+		add_custom_command(TARGET "${NAME}" POST_BUILD COMMAND ${CMAKE_BINARY_DIR}/UpdateDEF.bat \"$<TARGET_FILE:${NAME}>\" $(Configuration) WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+	endif()
 endmacro()
 
 macro(install_target NAME)
