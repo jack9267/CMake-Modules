@@ -14,14 +14,12 @@ macro(set_target_precompiled_header NAME HEADER)
 	endif()
 endmacro()
 
-function(set_target_module_definition_file NAME ENGINE_DEF)
+function(set_target_module_definition_file NAME ENGINE_DEF CONFIGURATION)
 	if(MSVC)
 		set(LINK_CMD "/DEF:\"${CMAKE_SOURCE_DIR}/${ENGINE_DEF}\"")
 
 		# apply link_cmd to all release configurations
-		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_RELEASE ${LINK_CMD})
-		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_MINSIZEREL ${LINK_CMD})
-		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_RELWITHDEBINFO ${LINK_CMD})
+		set_target_properties("${NAME}" PROPERTIES LINK_FLAGS_${CONFIGURATION} ${LINK_CMD})
 	endif()
 endfunction()
 
@@ -33,7 +31,9 @@ macro(hide_target_symbols NAME)
 			set(ENGINE_DEF "${NAME}_d.def")
 		endif()
 
-		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}")
+		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELEASE)
+		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" MINSIZEREL)
+		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELWITHDEBINFO)
 
 		file(WRITE ${CMAKE_BINARY_DIR}/UpdateDEF.bat "@echo off\nif \"%2\" == \"Debug\" call \"Tools\\Lucas Easy Export Definition File Updater.exe\" \"%~1\" -update \"%~n1.def\" -silent")
 
