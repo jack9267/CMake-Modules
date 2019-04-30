@@ -192,3 +192,29 @@ macro(get_git_info)
 	  OUTPUT_STRIP_TRAILING_WHITESPACE
 	)
 endmacro()
+
+macro(group_sources SOURCES DIR)
+	if(MSVC)
+		foreach(FILE ${SOURCES})
+		    # Get the directory of the source file
+		    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
+
+		    # Remove common directory prefix to make the group
+		    string(REPLACE "${DIR}" "" GROUP "${PARENT_DIR}")
+
+		    # Make sure we are using windows slashes
+		    string(REPLACE "/" "\\" GROUP "${GROUP}")
+
+		    # Group into "Source Files" and "Header Files"
+		    if ("${FILE}" MATCHES ".*\\.cpp")
+		       set(GROUP "Source Files\\${GROUP}")
+		    elseif("${FILE}" MATCHES ".*\\.h")
+		       set(GROUP "Header Files\\${GROUP}")
+		    elseif("${FILE}" MATCHES ".*\\.rc")
+		       set(GROUP "Resource Files\\${GROUP}")
+		    endif()
+
+		    source_group("${GROUP}" FILES "${FILE}")
+		endforeach()
+	endif()
+endmacro()
