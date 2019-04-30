@@ -210,11 +210,11 @@ macro(group_sources SOURCES DIRS)
 		    string(REPLACE "/" "\\" GROUP "${GROUP}")
 
 		    # Group into "Source Files" and "Header Files"
-		    if ("${FILE}" MATCHES ".*\\.cpp")
+		    if ("${FILE}" MATCHES ".*\\.(cpp|CPP)")
 		       set(GROUP "Source Files\\${GROUP}")
-		    elseif("${FILE}" MATCHES ".*\\.h")
+		    elseif("${FILE}" MATCHES ".*\\.(h|H)")
 		       set(GROUP "Header Files\\${GROUP}")
-		    elseif("${FILE}" MATCHES ".*\\.rc")
+		    elseif("${FILE}" MATCHES ".*\\.(rc|RC)")
 		       set(GROUP "Resource Files\\${GROUP}")
 		    endif()
 
