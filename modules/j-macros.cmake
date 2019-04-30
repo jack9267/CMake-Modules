@@ -193,14 +193,18 @@ macro(get_git_info)
 	)
 endmacro()
 
-macro(group_sources SOURCES DIR)
+macro(group_sources SOURCES DIRS)
 	if(MSVC)
 		foreach(FILE ${SOURCES})
 		    # Get the directory of the source file
 		    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
 
+		    set(GROUP ${PARENT_DIR})
+
 		    # Remove common directory prefix to make the group
-		    string(REPLACE "${DIR}" "" GROUP "${PARENT_DIR}")
+		    foreach(DIR ${DIRS})
+		    	string(REPLACE "${DIR}" "" GROUP "${GROUP}")
+		    endforeach()
 
 		    # Make sure we are using windows slashes
 		    string(REPLACE "/" "\\" GROUP "${GROUP}")
