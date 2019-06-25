@@ -20,7 +20,7 @@ endif()
 if(UNIX)
 	if(CMAKE_COMPILER_IS_GNUCC)
 		# default hidden
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -fdata-sections -ffunction-sections")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -fdata-sections -ffunction-sections")
 
 		# strip on release builds
