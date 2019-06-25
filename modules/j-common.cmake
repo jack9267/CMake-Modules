@@ -12,6 +12,26 @@ if(NOT MSVC)
 	set(CMAKE_THREAD_PREFER_PTHREAD true)
 endif()
 
+if(UNIX)
+	# link time generation
+	set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
+
+if(UNIX)
+	if(CMAKE_COMPILER_IS_GNUCC)
+		# default hidden
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden --fdata-sections -ffunction-sections")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -fdata-sections -ffunction-sections")
+
+		# strip on release builds
+		set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL} -s")
+		set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -s")
+
+		set(CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL "${CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL} -s")
+		set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -s")
+	endif()
+endif()
+
 if(MSVC)
 	# Ensure Release has debug info
 	#set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELWITHDEBINFO}")
@@ -57,24 +77,27 @@ else()
 	message(WARNING "C++14 is NOT supported by the compiler")
 endif()
 
+set(RUNTIME_DEBUG_POSTFIX "_d")
+set(RUNTIME_RELEASE_POSTFIX "")
+
 # determine bits
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	set(ENGINE_PLATFORM "x64")
 
-	set(RUNTIME_DEBUG_POSTFIX "_d_${ENGINE_PLATFORM}")
-	set(RUNTIME_RELEASE_POSTFIX "_${ENGINE_PLATFORM}")
+	# on Windows use _x64 for 64-bit binaries
+	if(WIN32)
+		set(RUNTIME_DEBUG_POSTFIX "_d_${ENGINE_PLATFORM}")
+		set(RUNTIME_RELEASE_POSTFIX "_${ENGINE_PLATFORM}")
+	endif()
 else()
 	set(ENGINE_PLATFORM "x86")
-
-	set(RUNTIME_DEBUG_POSTFIX "_d")
-	set(RUNTIME_RELEASE_POSTFIX "")
 endif()
 
 # lib directory
 if(MSVC)
 	set(LIB_DIRECTORY "Lib/${ENGINE_PLATFORM}/${CMAKE_VS_PLATFORM_TOOLSET}")
 else()
-	set(LIB_DIRECTORY "Lib")
+	set(LIB_DIRECTORY "lib")
 endif()
 
 # hide symbols
@@ -210,6 +233,11 @@ if(MSVC)
 
 	# Warnings should be errors
 	#add_compiler_flags("/WX")
+endif()
+
+if(UNIX)
+	# Disable deprecated warnings because of unnamed unions
+	add_compiler_flags("-Wno-deprecated-declarations")
 endif()
 
 # to avoid repeating stuff

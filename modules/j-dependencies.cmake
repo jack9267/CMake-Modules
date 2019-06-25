@@ -9,6 +9,10 @@ if(WIN32)
 	include_directories("${DEPENDENCIES_PATH}/include")
 
 	set(DEPENDENCIES_LIBS "${DEPENDENCIES_PATH}/${LIB_DIRECTORY}")
+else()
+	find_package(SDL2 REQUIRED)
+
+	include_directories(${SDL2_INCLUDE_DIRS})
 endif()
 
 if(MSVC)
