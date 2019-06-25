@@ -1,7 +1,8 @@
 
+set(GALACTIC_PATH "${CMAKE_SOURCE_DIR}/../Galactic" CACHE PATH "Galactic location")
+include_directories("${GALACTIC_PATH}/include")
+
 if(WIN32)
-	set(GALACTIC_PATH "${CMAKE_SOURCE_DIR}/../Galactic" CACHE PATH "Galactic location")
-	include_directories("${GALACTIC_PATH}/include")
 	set(GALACTIC_LIBS "${GALACTIC_PATH}/${LIB_DIRECTORY}")
 endif()
 

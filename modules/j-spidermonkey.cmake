@@ -1,7 +1,8 @@
 
+set(SPIDERMONKEY_PATH "${CMAKE_SOURCE_DIR}/../SpiderMonkey" CACHE PATH "SpiderMonkey location")
+include_directories("${SPIDERMONKEY_PATH}/include")
+
 if(WIN32)
-	set(SPIDERMONKEY_PATH "${CMAKE_SOURCE_DIR}/../SpiderMonkey" CACHE PATH "SpiderMonkey location")
-	include_directories("${SPIDERMONKEY_PATH}/include")
 	set(SPIDERMONKEY_LIBS "${SPIDERMONKEY_PATH}/Lib/${ENGINE_PLATFORM}/v140_xp")
 endif()
 
