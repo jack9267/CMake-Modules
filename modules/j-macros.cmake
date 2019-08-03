@@ -25,19 +25,22 @@ endfunction()
 
 macro(hide_target_symbols NAME)
 	if(MSVC)
-		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-			set(ENGINE_DEF "${NAME}_d_x64.def")
-		else()
-			set(ENGINE_DEF "${NAME}_d.def")
+		get_target_property(target_type ${NAME} TYPE)
+		if(target_type STREQUAL "EXECUTABLE" OR target_type STREQUAL "SHARED_LIBRARY")
+			if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+				set(ENGINE_DEF "${NAME}_d_x64.def")
+			else()
+				set(ENGINE_DEF "${NAME}_d.def")
+			endif()
+
+			set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELEASE)
+			set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" MINSIZEREL)
+			set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELWITHDEBINFO)
+
+			file(WRITE ${CMAKE_BINARY_DIR}/UpdateDEF.bat "@echo off\nif \"%2\" == \"Debug\" call \"Tools\\Lucas Easy Export Definition File Updater.exe\" \"%~1\" -update \"%~n1.def\" -silent")
+
+			add_custom_command(TARGET "${NAME}" POST_BUILD COMMAND ${CMAKE_BINARY_DIR}/UpdateDEF.bat \"$<TARGET_FILE:${NAME}>\" $(Configuration) WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 		endif()
-
-		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELEASE)
-		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" MINSIZEREL)
-		set_target_module_definition_file("${NAME}" "${ENGINE_DEF}" RELWITHDEBINFO)
-
-		file(WRITE ${CMAKE_BINARY_DIR}/UpdateDEF.bat "@echo off\nif \"%2\" == \"Debug\" call \"Tools\\Lucas Easy Export Definition File Updater.exe\" \"%~1\" -update \"%~n1.def\" -silent")
-
-		add_custom_command(TARGET "${NAME}" POST_BUILD COMMAND ${CMAKE_BINARY_DIR}/UpdateDEF.bat \"$<TARGET_FILE:${NAME}>\" $(Configuration) WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 	endif()
 endmacro()
 
