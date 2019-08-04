@@ -1,4 +1,7 @@
 
+# Currently we put the runtime library as flags
+cmake_policy(SET CMP0091 OLD)
+
 # We only want Debug and Release
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "Configuration types" FORCE)
 
