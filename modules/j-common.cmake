@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.15)
 
 # Currently we put the runtime library as flags
 cmake_policy(SET CMP0091 OLD)
