@@ -105,6 +105,17 @@ macro(install_target_debug_info_to NAME TO)
 	endif()
 endmacro()
 
+# Hack for MSVC
+macro(install_static_debug_info NAME)
+	if(MSVC)
+		set_target_properties(${NAME} PROPERTIES COMPILE_PDB_NAME ${NAME})
+
+		install(FILES "$<TARGET_FILE_DIR:${NAME}>/${NAME}.pdb" DESTINATION "${LIB_DIRECTORY}/Debug" CONFIGURATIONS Debug OPTIONAL)
+		install(FILES "$<TARGET_FILE_DIR:${NAME}>/${NAME}.pdb" DESTINATION "${LIB_DIRECTORY}/Release" CONFIGURATIONS Release OPTIONAL)
+		install(FILES "$<TARGET_FILE_DIR:${NAME}>/${NAME}.pdb" DESTINATION "${LIB_DIRECTORY}/RelWithDebInfo" CONFIGURATIONS RelWithDebInfo OPTIONAL)
+	endif()
+endmacro()
+
 # to avoid repeating stuff
 function(new_library_static NAME SOURCES DEFINES)
 	set(LIBRARY_SOURCES "")
