@@ -1,9 +1,5 @@
 
-if(EXISTS "${CMAKE_SOURCE_DIR}/../Galactic")
-	set(GALACTIC_PATH "${CMAKE_SOURCE_DIR}/../Galactic" CACHE PATH "Galactic location")
-else()
-	set(GALACTIC_PATH "$ENV{galactic_home}" CACHE PATH "Galactic location")
-endif()
+set(GALACTIC_PATH "$ENV{galactic_home}" CACHE PATH "Galactic location")
 
 if(NOT EXISTS "${GALACTIC_PATH}")
 	message(FATAL_ERROR "Invalid Galactic path")
