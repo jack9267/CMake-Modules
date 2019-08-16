@@ -135,6 +135,7 @@ function(new_library_static NAME SOURCES DEFINES)
 	endforeach()
 
 	install_target(${NAME}_static)
+	install_static_debug_info(${NAME})
 endfunction()
 
 function(new_library_shared NAME SOURCES DEFINES)
