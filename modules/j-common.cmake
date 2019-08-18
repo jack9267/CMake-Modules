@@ -6,11 +6,6 @@ cmake_policy(SET CMP0091 OLD)
 # We only want Debug and Release
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "Configuration types" FORCE)
 
-if(WIN32)
-	# Find NASM
-	enable_language(ASM_NASM)
-endif()
-
 if(NOT MSVC)
 	# Use pthreads on other systems
 	set(CMAKE_THREAD_PREFER_PTHREAD true)
