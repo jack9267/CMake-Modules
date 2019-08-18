@@ -1,6 +1,6 @@
 
 if(WIN32)
-	set(DEPENDENCIES_PATH "$ENV{dependencies}" CACHE PATH "Dependencies location")
+	set(DEPENDENCIES_PATH "$ENV{jdependencies_home}" CACHE PATH "Dependencies location")
 
 	if(DEPENDENCIES_PATH STREQUAL "")
 		message(FATAL_ERROR "Invalid dependencies path")
