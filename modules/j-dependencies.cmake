@@ -6,6 +6,8 @@ if(WIN32)
 		message(FATAL_ERROR "Invalid dependencies path")
 	endif()
 
+	set(DEPENDENCIES_LIBS "${DEPENDENCIES_PATH}/${LIB_DIRECTORY}")
+
 	add_external_project(${DEPENDENCIES_PATH} FALSE)
 else()
 	find_package(SDL2 REQUIRED)
