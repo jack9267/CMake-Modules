@@ -5,6 +5,6 @@ if(WIN32)
 	if(LITEHTML_PATH STREQUAL "")
 		message(FATAL_ERROR "Invalid litehtml path")
 	endif()
-endif()
 
-add_external_project(${LITEHTML_PATH} FALSE)
+	add_external_project(${LITEHTML_PATH} FALSE)
+endif()
