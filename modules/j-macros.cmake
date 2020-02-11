@@ -259,7 +259,7 @@ macro(add_external_project PATH RELWITHDEBUG)
 	include_directories("${PATH}/include")
 
 	set(LIBS "${PATH}/${LIB_DIRECTORY}")
-	if(RELWITHDEBUG)
+	if(${RELWITHDEBUG})
 		set(RELWITHDEBINFO_NAME "RelWithDebInfo")
 	else()
 		set(RELWITHDEBINFO_NAME "Release")
