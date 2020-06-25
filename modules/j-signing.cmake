@@ -1,5 +1,6 @@
 if(EXISTS "$ENV{dropbox}/Private/Certificate/Output/Code.pfx")
 	set(ENGINE_SIGNING ON)
+	add_definitions(-DENGINE_SIGNING)
 else()
 	set(ENGINE_SIGNING OFF)
 endif()
