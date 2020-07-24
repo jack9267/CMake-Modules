@@ -219,3 +219,12 @@ endif()
 function(install_include INCLUDE)
 	install(DIRECTORY "${INCLUDE}/" DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
 endfunction()
+
+# for raspberry pi we need these, dont ask why
+if(UNIX AND NOT APPLE AND NOT ANDROID)
+	if(EXISTS "/opt/vc/include/bcm_host.h")
+		include_directories(/opt/vc/include /opt/vc/include/interface/vcos/pthreads /opt/vc/include/interface/vmcs_host/linux)
+		link_directories(/opt/vc/lib)
+		link_libraries(openmaxil bcm_host vcos vchiq_arm)
+	endif()
+endif()
