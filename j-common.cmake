@@ -82,7 +82,7 @@ endif()
 if(MSVC)
 	set(LIB_DIRECTORY "Lib/${ENGINE_PLATFORM}/${CMAKE_VS_PLATFORM_TOOLSET}")
 else()
-	set(LIB_DIRECTORY "lib")
+	set(LIB_DIRECTORY "Lib/${ENGINE_PLATFORM}")
 endif()
 
 # hide symbols
