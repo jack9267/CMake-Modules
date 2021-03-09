@@ -3,17 +3,18 @@ cmake_minimum_required(VERSION 3.15)
 # Currently we put the runtime library as flags
 cmake_policy(SET CMP0091 OLD)
 
+# Do not add flags to export symbols from executables without the ENABLE_EXPORTS target property
+cmake_policy(SET CMP0065 NEW)
+
 # We only want Debug and Release
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "Configuration types" FORCE)
+
+# link time generation
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 if(NOT MSVC)
 	# Use pthreads on other systems
 	set(CMAKE_THREAD_PREFER_PTHREAD true)
-endif()
-
-if(UNIX)
-	# link time generation
-	set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
 if(MSVC)
@@ -71,8 +72,10 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 # hide symbols on unix
 if(UNIX AND CMAKE_COMPILER_IS_GNUCC)
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -fvisibility=hidden")
-	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3 -fvisibility=hidden")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -fvisibility=hidden -fdata-sections -ffunction-sections -g0")
+	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3 -fvisibility=hidden -fdata-sections -ffunction-sections -g0")
+
+	set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--gc-sections")
 endif()
 
 macro(add_compiler_flags FLAGS)
