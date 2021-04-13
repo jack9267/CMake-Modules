@@ -45,6 +45,9 @@ if(MSVC)
 	# structure was padded due to alignment specifier
 	disable_warning(4324)
 
+	# 'conversion' : conversion from 'type1' to 'type2', signed/unsigned mismatch
+	disable_warning(4245)
+
 	# export 'exportname' specified multiple times; using first specification
 	disable_linker_warning(4197)
 endif()
