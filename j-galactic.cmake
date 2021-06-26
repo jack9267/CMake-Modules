@@ -7,4 +7,4 @@ endif()
 
 set(GALACTIC_LIBS "${GALACTIC_PATH}/${LIB_DIRECTORY}")
 
-add_external_project(${GALACTIC_PATH} TRUE)
+add_external_project(${GALACTIC_PATH} FALSE)
