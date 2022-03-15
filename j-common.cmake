@@ -200,7 +200,7 @@ endif()
 
 # to avoid repeating stuff
 function(install_include INCLUDE)
-	install(DIRECTORY "${INCLUDE}/" DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+	install(DIRECTORY "${INCLUDE}/" DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.inl")
 endfunction()
 
 # for raspberry pi we need these, dont ask why
