@@ -1,9 +1,15 @@
 
+if(SUPPORT_WINXP)
+	set(SPIDERMONKEY_BUILD esr52)
+else()
+	set(SPIDERMONKEY_BUILD esr60)
+endif()
+
 set(SPIDERMONKEY_PATH "${CMAKE_SOURCE_DIR}/../SpiderMonkey" CACHE PATH "SpiderMonkey location")
-include_directories("${SPIDERMONKEY_PATH}/include")
+include_directories("${SPIDERMONKEY_PATH}/${SPIDERMONKEY_BUILD}/include")
 
 if(WIN32)
-	set(SPIDERMONKEY_LIBS "${SPIDERMONKEY_PATH}/Lib/${ENGINE_PLATFORM}/v140_xp")
+	set(SPIDERMONKEY_LIBS "${SPIDERMONKEY_PATH}/${SPIDERMONKEY_BUILD}/Lib/${ENGINE_PLATFORM}")
 endif()
 
 if(MSVC)

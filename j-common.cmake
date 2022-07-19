@@ -69,6 +69,13 @@ else()
 	set(LIB_DIRECTORY "Lib/${ENGINE_PLATFORM}")
 endif()
 
+# so we know if we are supporting XP
+if(MSVC AND CMAKE_VS_PLATFORM_TOOLSET MATCHES ".*_xp$")
+	set(SUPPORT_WINXP true)
+else()
+	set(SUPPORT_WINXP false)
+endif()
+
 # hide symbols on unix
 if(UNIX AND CMAKE_COMPILER_IS_GNUCC)
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -fvisibility=hidden -fdata-sections -ffunction-sections -g0")
