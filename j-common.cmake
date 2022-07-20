@@ -151,6 +151,9 @@ if(MSVC)
 	# common defines
 	add_definitions(-DWIN32 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_USE_MATH_DEFINES=1 -DNOMINMAX)
 
+	# use PSAPI version 1
+	add_definitions(-DPSAPI_VERSION=1)
+
 	if(MSVC_VERSION GREATER_EQUAL 1900)
 		# Prevent static variables from being thread local storage
 		add_compiler_flags("/Zc:threadSafeInit-")
