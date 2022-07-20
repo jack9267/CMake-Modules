@@ -24,9 +24,9 @@ endif()
 
 macro(target_link_spidermonkey NAME)
 	if(SUPPORT_WINXP)
-		target_link_libraries(${NAME} PRIVATE mozjs-52)
+		target_link_libraries(${NAME} PRIVATE kernel32 mozjs-52)
 	else()
-		target_link_libraries(${NAME} PRIVATE mozjs-60)
+		target_link_libraries(${NAME} PRIVATE kernel32 mozjs-60)
 	endif()
 endmacro()
 
