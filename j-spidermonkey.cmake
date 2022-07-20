@@ -1,8 +1,8 @@
 
 if(SUPPORT_WINXP)
-	set(SPIDERMONKEY_BUILD esr52)
+	set(SPIDERMONKEY_BUILD "esr52")
 else()
-	set(SPIDERMONKEY_BUILD esr60)
+	set(SPIDERMONKEY_BUILD "esr60")
 endif()
 
 set(SPIDERMONKEY_PATH "${CMAKE_SOURCE_DIR}/../SpiderMonkey" CACHE PATH "SpiderMonkey location")
