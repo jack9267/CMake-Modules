@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 
-# Currently we put the runtime library as flags
-cmake_policy(SET CMP0091 OLD)
-
 # Do not add flags to export symbols from executables without the ENABLE_EXPORTS target property
 cmake_policy(SET CMP0065 NEW)
 
@@ -127,6 +124,7 @@ if(MSVC)
 	# Force /MT for static VC runtimes if Release...
 	option(FORCE_STATIC_VCRT "Force /MT for static VC runtimes" OFF)
 	if(FORCE_STATIC_VCRT)
+		# obsolete
 		foreach(flag_var
 			CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
 			CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO
@@ -138,6 +136,9 @@ if(MSVC)
 		endforeach()
 
 		set(LIB_DIRECTORY "${LIB_DIRECTORY}_static")
+
+		# new method
+		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 	endif()
 
 	if(MSVC_VERSION GREATER_EQUAL 1900 AND CMAKE_SIZEOF_VOID_P EQUAL 4)
