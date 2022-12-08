@@ -13,7 +13,9 @@ endif()
 
 set(SPIDERMONKEY_LIBS "${SPIDERMONKEY_PATH}/${SPIDERMONKEY_BUILD}/Lib/${ENGINE_PLATFORM}")
 
-add_external_project(${SPIDERMONKEY_PATH}/${SPIDERMONKEY_BUILD} FALSE)
+include_directories("${SPIDERMONKEY_PATH}/${SPIDERMONKEY_BUILD}/include")
+
+add_external_project_internal(${SPIDERMONKEY_LIBS} FALSE)
 
 macro(target_link_spidermonkey NAME)
 	if(WIN32)

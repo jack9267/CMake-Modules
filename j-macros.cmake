@@ -255,10 +255,7 @@ macro(group_sources SOURCES DIRS)
 	endif()
 endmacro()
 
-macro(add_external_project PATH RELWITHDEBUG)
-	include_directories("${PATH}/include")
-
-	set(LIBS "${PATH}/${LIB_DIRECTORY}")
+macro(add_external_project_internal LIBS RELWITHDEBUG)
 	if(${RELWITHDEBUG})
 		set(RELWITHDEBINFO_NAME "RelWithDebInfo")
 	else()
@@ -278,4 +275,12 @@ macro(add_external_project PATH RELWITHDEBUG)
 	else()
 		link_directories(${LIBS})
 	endif()
+endmacro()
+
+macro(add_external_project PATH RELWITHDEBUG)
+	include_directories("${PATH}/include")
+
+	set(LIBS "${PATH}/${LIB_DIRECTORY}")
+
+	add_external_project_internal(${LIBS} ${RELWITHDEBUG})
 endmacro()
