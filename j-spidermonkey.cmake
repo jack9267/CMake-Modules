@@ -5,7 +5,7 @@ else()
 	set(SPIDERMONKEY_BUILD "esr60")
 endif()
 
-set(SPIDERMONKEY_PATH "${CMAKE_SOURCE_DIR}/../SpiderMonkey" CACHE PATH "SpiderMonkey location")
+set(SPIDERMONKEY_PATH "$ENV{jspidermonkey_home}" CACHE PATH "SpiderMonkey location")
 
 if(NOT EXISTS "${SPIDERMONKEY_PATH}")
 	message(FATAL_ERROR "Invalid SpiderMonkey path")
