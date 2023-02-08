@@ -2,7 +2,7 @@
 if(SUPPORT_WINXP)
 	set(SPIDERMONKEY_BUILD "esr52")
 else()
-	set(SPIDERMONKEY_BUILD "esr60")
+	set(SPIDERMONKEY_BUILD "esr68")
 endif()
 
 set(SPIDERMONKEY_PATH "$ENV{jspidermonkey_home}" CACHE PATH "SpiderMonkey location")
@@ -25,7 +25,7 @@ macro(target_link_spidermonkey NAME)
 	if(SUPPORT_WINXP)
 		target_link_libraries(${NAME} PRIVATE mozjs-52)
 	else()
-		target_link_libraries(${NAME} PRIVATE mozjs-60)
+		target_link_libraries(${NAME} PRIVATE mozjs-68)
 	endif()
 endmacro()
 
