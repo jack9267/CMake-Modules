@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 
-# Do not add flags to export symbols from executables without the ENABLE_EXPORTS target property
-cmake_policy(SET CMP0065 NEW)
-
 # We only want Debug and Release
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "Configuration types" FORCE)
 
