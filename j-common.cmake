@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.15)
-
 # We only want Debug and Release
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo" CACHE STRING "Configuration types" FORCE)
 
