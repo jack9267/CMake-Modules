@@ -1,10 +1,12 @@
 
 if(SUPPORT_WINXP)
-	set(SPIDERMONKEY_BUILD "esr52")
+	set(SPIDERMONKEY_VERSION "52" CACHE STRING "SpiderMonkey version")
 else()
-	set(SPIDERMONKEY_BUILD "esr68")
+	set(SPIDERMONKEY_VERSION "68" CACHE STRING "SpiderMonkey version")
 endif()
 
+set(SPIDERMONKEY_BUILD "esr${SPIDERMONKEY_VERSION}")
+set(SPIDERMONKEY_LIB "mozjs-${SPIDERMONKEY_VERSION}")
 set(SPIDERMONKEY_PATH "$ENV{jspidermonkey_home}" CACHE PATH "SpiderMonkey location")
 
 if(NOT EXISTS "${SPIDERMONKEY_PATH}")
@@ -23,9 +25,9 @@ macro(target_link_spidermonkey NAME)
 	endif()
 
 	if(SUPPORT_WINXP)
-		target_link_libraries(${NAME} PRIVATE mozjs-52)
+		target_link_libraries(${NAME} PRIVATE ${SPIDERMONKEY_LIB})
 	else()
-		target_link_libraries(${NAME} PRIVATE mozjs-68)
+		target_link_libraries(${NAME} PRIVATE ${SPIDERMONKEY_LIB})
 	endif()
 endmacro()
 
