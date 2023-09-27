@@ -2,7 +2,7 @@
 if(SUPPORT_WINXP)
 	set(SPIDERMONKEY_VERSION "52" CACHE STRING "SpiderMonkey version")
 else()
-	set(SPIDERMONKEY_VERSION "68" CACHE STRING "SpiderMonkey version")
+	set(SPIDERMONKEY_VERSION "60" CACHE STRING "SpiderMonkey version")
 endif()
 
 set(SPIDERMONKEY_BUILD "esr${SPIDERMONKEY_VERSION}")
@@ -24,11 +24,7 @@ macro(target_link_spidermonkey NAME)
 		target_link_libraries(${NAME} PRIVATE kernel32)
 	endif()
 
-	if(SUPPORT_WINXP)
-		target_link_libraries(${NAME} PRIVATE ${SPIDERMONKEY_LIB})
-	else()
-		target_link_libraries(${NAME} PRIVATE ${SPIDERMONKEY_LIB})
-	endif()
+	target_link_libraries(${NAME} PRIVATE ${SPIDERMONKEY_LIB})
 endmacro()
 
 macro(install_spidermonkey_to TO)
