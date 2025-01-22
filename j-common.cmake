@@ -155,7 +155,7 @@ if(MSVC)
 	# use PSAPI version 1
 	add_definitions(-DPSAPI_VERSION=1)
 
-	if(MSVC_VERSION GREATER_EQUAL 1900)
+	if(MSVC_VERSION GREATER_EQUAL 1900 AND SUPPORT_WINXP)
 		# Prevent static variables from being thread local storage
 		add_compiler_flags("/Zc:threadSafeInit-")
 	endif()
