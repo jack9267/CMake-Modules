@@ -9,6 +9,9 @@ if(MSVC AND CUSTOM_MSVC_WARNING_LEVEL)
 endif()
 
 if(MSVC)
+	# 'identifier' : unreferenced formal parameter
+	disable_warning(4100)
+
 	# Inline asm assigning to 'FS:0' : handler not registered as safe handler
 	disable_warning(4733)
 
