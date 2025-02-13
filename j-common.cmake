@@ -160,6 +160,11 @@ if(MSVC)
 		add_compiler_flags("/Zc:threadSafeInit-")
 	endif()
 
+	if(MSVC_VERSION GREATER_EQUAL 1914)
+		# Enable updated __cplusplus macro
+		add_compiler_flags("/Zc:__cplusplus")
+	endif()
+
 	# multi-processor core
 	add_compiler_flags("/MP")
 
