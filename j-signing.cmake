@@ -9,7 +9,7 @@ macro(sign_me NAME)
 	if(MSVC AND ENGINE_SIGNING)
 		get_target_property(target_type ${NAME} TYPE)
 		if (target_type STREQUAL "EXECUTABLE" OR target_type STREQUAL "SHARED_LIBRARY")
-			file(WRITE ${CMAKE_BINARY_DIR}/SignMe.bat "@echo off\n\"%ProgramFiles(x86)%\\Microsoft SDKs\\Windows\\v7.1A\\Bin\\signtool\" sign /v /f \"%dropbox%\\Private\\Certificate\\Output\\Code.pfx\" /fd SHA256 \"%~1\"")
+			file(WRITE ${CMAKE_BINARY_DIR}/SignMe.bat "@echo off\nset PATH=%PATH%;%ProgramFiles(x86)%\\Microsoft SDKs\\Windows\\v7.1A\\Bin;%ProgramFiles(x86)%\\Windows Kits\\10\\bin\\10.0.26100.0\\x86\nsigntool sign /v /f \"%dropbox%\\Private\\Certificate\\Output\\Code.pfx\" /fd SHA256 \"%~1\"")
 
 			add_custom_command(TARGET ${NAME} POST_BUILD COMMAND ${CMAKE_BINARY_DIR}/SignMe.bat \"$<TARGET_FILE:${NAME}>\" $(Configuration) WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 		endif()
