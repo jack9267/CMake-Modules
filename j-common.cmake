@@ -155,9 +155,11 @@ if(MSVC)
 	# use PSAPI version 1
 	add_definitions(-DPSAPI_VERSION=1)
 
-	if(MSVC_VERSION GREATER_EQUAL 1900 AND SUPPORT_WINXP)
-		# Prevent static variables from being thread local storage
-		add_compiler_flags("/Zc:threadSafeInit-")
+	# Prevent static variables from being thread local storage
+	if(MSVC_VERSION GREATER_EQUAL 1900 AND SUPPORT_WINXP AND NOT WINXP_SUPPORTS_TLS)
+		# Magic statics use a TLS-based guard that breaks in DLLs loaded with
+		# LoadLibrary on XP. Executables are fine, so only disable it for libraries.
+		add_compile_options("$<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>>:/Zc:threadSafeInit->")
 	endif()
 
 	if(MSVC_VERSION GREATER_EQUAL 1914)
