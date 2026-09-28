@@ -155,6 +155,8 @@ function(new_library_shared NAME SOURCES DEFINES)
 		target_compile_definitions("${NAME}" PRIVATE ${DEFINE})
 	endforeach()
 
+	apply_xp_thunks("${NAME}")
+
 	install_target(${NAME})
 	install_target_debug_info("${NAME}")
 endfunction()
@@ -173,6 +175,8 @@ function(new_library_executable NAME SOURCES DEFINES)
 	foreach(DEFINE ${DEFINES})
 		target_compile_definitions("${NAME}" PRIVATE ${DEFINE})
 	endforeach()
+
+	apply_xp_thunks(${NAME})
 
 	install_target(${NAME})
 	install_target_debug_info(${NAME})

@@ -66,12 +66,9 @@ else()
 	set(LIB_DIRECTORY "Lib/${ENGINE_PLATFORM}")
 endif()
 
-# so we know if we are supporting XP
-if(MSVC AND CMAKE_VS_PLATFORM_TOOLSET MATCHES ".*_xp$")
-	set(SUPPORT_WINXP true)
-else()
-	set(SUPPORT_WINXP false)
-endif()
+# SUPPORT_WINXP and USING_XP_TOOLSET, which used to be the same statement and are not any more -
+# see j-xp.cmake. Needs ENGINE_PLATFORM above it and must precede every target.
+include(j-xp)
 
 # hide symbols on unix
 if(UNIX AND CMAKE_COMPILER_IS_GNUCC)
